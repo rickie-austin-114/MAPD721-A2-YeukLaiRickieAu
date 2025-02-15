@@ -86,7 +86,7 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
   fun initialLoad() {
     viewModelScope.launch {
       tryWithPermissionsCheck {
-        readExerciseSessions()
+        //readExerciseSessions()
       }
     }
   }
@@ -105,6 +105,14 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
         val endOfSession = startOfSession.plusMinutes(30)
 
         healthConnectManager.writeExerciseSession(startOfSession, endOfSession)
+        //readExerciseSessions()
+      }
+    }
+  }
+
+  fun load() {
+    viewModelScope.launch {
+      tryWithPermissionsCheck {
         readExerciseSessions()
       }
     }

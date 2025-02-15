@@ -37,8 +37,6 @@ data class ExerciseSessionData(
     val maxHeartRate: Long? = null,
     val avgHeartRate: Long? = null,
     val heartRateSeries: List<HeartRateRecord> = listOf(),
-    val heartRate: HeartRateRecord? = null,
-    val heartRateMeasurementDate: Instant? = null,
     val minSpeed: Velocity? = null,
     val maxSpeed: Velocity? = null,
     val avgSpeed: Velocity? = null,

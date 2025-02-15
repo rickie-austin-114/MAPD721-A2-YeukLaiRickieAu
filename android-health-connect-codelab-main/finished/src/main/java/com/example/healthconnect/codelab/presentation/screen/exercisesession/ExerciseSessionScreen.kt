@@ -69,7 +69,8 @@ fun ExerciseSessionScreen(
   onError: (Throwable?) -> Unit = {},
   onPermissionsResult: () -> Unit = {},
   onPermissionsLaunch: (Set<String>) -> Unit = {},
-  sessionsMetricList: List<ExerciseSessionData>
+  sessionsMetricList: List<ExerciseSessionData>,
+  onLoadClick: () -> Unit = {},
 ) {
 
   // Remember the last error ID, such that it is possible to avoid re-launching the error
@@ -128,7 +129,7 @@ fun ExerciseSessionScreen(
               .height(48.dp)
               .padding(4.dp),
             onClick = {
-              onInsertClick()
+              onLoadClick()
             }
           ) {
             Text(stringResource(id = R.string.load))

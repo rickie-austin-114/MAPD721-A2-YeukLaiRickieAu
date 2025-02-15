@@ -122,7 +122,10 @@ fun HealthConnectNavigation(
         onPermissionsLaunch = { values ->
           permissionsLauncher.launch(values)
         },
-        sessionsMetricList = sessionsMetricList
+        sessionsMetricList = sessionsMetricList,
+        onLoadClick = {
+          viewModel.load()
+        }
       )
     }
     composable(Screen.ExerciseSessionDetail.route + "/{$UID_NAV_ARGUMENT}") {
