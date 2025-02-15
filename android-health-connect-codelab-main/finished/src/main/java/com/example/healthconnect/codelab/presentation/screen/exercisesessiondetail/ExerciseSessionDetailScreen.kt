@@ -100,6 +100,7 @@ fun ExerciseSessionDetailScreen(
         sessionDetailsItem(labelId = R.string.total_active_duration) {
           val activeDuration = sessionMetrics.totalActiveTime ?: Duration.ZERO
           Text(activeDuration.formatTime())
+
         }
         sessionDetailsItem(labelId = R.string.total_steps) {
           Text(sessionMetrics.totalSteps?.toString() ?: "0")

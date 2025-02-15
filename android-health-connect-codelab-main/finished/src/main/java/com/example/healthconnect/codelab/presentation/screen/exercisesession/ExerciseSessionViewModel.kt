@@ -32,6 +32,7 @@ import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.healthconnect.codelab.data.ExerciseSessionData
 import com.example.healthconnect.codelab.data.HealthConnectManager
 import java.io.IOException
 import java.time.Duration
@@ -51,7 +52,6 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
     HealthPermission.getReadPermission(StepsRecord::class),
     HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class),
     HealthPermission.getWritePermission(HeartRateRecord::class),
-
   )
 
   val backgroundReadPermissions = setOf(PERMISSION_READ_HEALTH_DATA_IN_BACKGROUND)
@@ -73,6 +73,9 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
     private set
 
   var sessionsList: MutableState<List<ExerciseSessionRecord>> = mutableStateOf(listOf())
+    private set
+
+  var sessionMetricsList: MutableState<List<ExerciseSessionData>> = mutableStateOf(listOf())
     private set
 
   var uiState: UiState by mutableStateOf(UiState.Uninitialized)
@@ -112,6 +115,13 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
     val now = Instant.now()
 
     sessionsList.value = healthConnectManager.readExerciseSessions(start.toInstant(), now)
+
+
+    sessionMetricsList = mutableStateOf(listOf())
+
+    sessionsList.value.forEach { session ->
+      sessionMetricsList.value += healthConnectManager.readAssociatedSessionData(session.metadata.id)
+    }
   }
 
   fun enqueueReadStepWorker(){

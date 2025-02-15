@@ -34,10 +34,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.records.ExerciseSessionRecord
+import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.records.metadata.Metadata
+import androidx.health.connect.client.units.Energy
+import androidx.health.connect.client.units.Length
+import androidx.health.connect.client.units.Velocity
 import com.example.healthconnect.codelab.R
+import com.example.healthconnect.codelab.data.ExerciseSessionData
 import com.example.healthconnect.codelab.presentation.component.ExerciseSessionRow
 import com.example.healthconnect.codelab.presentation.theme.HealthConnectTheme
+import java.time.Instant
 import java.time.ZonedDateTime
 import java.util.UUID
 
@@ -62,6 +69,7 @@ fun ExerciseSessionScreen(
   onError: (Throwable?) -> Unit = {},
   onPermissionsResult: () -> Unit = {},
   onPermissionsLaunch: (Set<String>) -> Unit = {},
+  sessionsMetricList: List<ExerciseSessionData>
 ) {
 
   // Remember the last error ID, such that it is possible to avoid re-launching the error
@@ -114,6 +122,8 @@ fun ExerciseSessionScreen(
             Text(stringResource(id = R.string.insert_exercise_session))
           }
         }
+
+        /*
         if (!backgroundReadGranted) {
           item {
             Button(
@@ -168,7 +178,7 @@ fun ExerciseSessionScreen(
               }
             }
           }
-        }
+        } */
 
         items(sessionsList) { session ->
           ExerciseSessionRow(
@@ -176,17 +186,26 @@ fun ExerciseSessionScreen(
             ZonedDateTime.ofInstant(session.endTime, session.endZoneOffset),
             session.metadata.id,
             session.metadata.dataOrigin.packageName,
+
             session.title ?: stringResource(R.string.no_title),
             onDetailsClick = { uid ->
               onDetailsClick(uid)
             }
           )
         }
+
+        items(sessionsMetricList) { session ->
+
+
+          Text(session.heartRateSeries[0].samples[0].time.toString() + " " + session.heartRateSeries[0].samples[0].beatsPerMinute.toString())
+
+
+        }
       }
     }
   }
 }
-
+/*
 @Preview
 @Composable
 fun ExerciseSessionScreenPreview() {
@@ -224,7 +243,29 @@ fun ExerciseSessionScreenPreview() {
           metadata = Metadata(UUID.randomUUID().toString())
         )
       ),
-      uiState = ExerciseSessionViewModel.UiState.Done
+      uiState = ExerciseSessionViewModel.UiState.Done,
+      sessionsMetricList = listOf(
+        ExerciseSessionData(
+          uid = "1",
+
+          heartRateSeries = listOf(
+            HeartRateRecord(
+              startTime: time.now(),
+              startZoneOffset: ZoneOffset?,
+            endTime: Instant,
+            endZoneOffset: ZoneOffset?,
+          samples: List<HeartRateRecord.Sample>,
+        metadata: Metadata
+            )
+          ),
+          speedRecord = listOf(
+            SpeedRecord(
+
+            )
+          ),
+        )
+      )
     )
   }
 }
+*/

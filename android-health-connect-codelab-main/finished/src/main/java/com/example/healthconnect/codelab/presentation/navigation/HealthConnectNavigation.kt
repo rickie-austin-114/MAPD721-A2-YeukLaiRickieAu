@@ -80,6 +80,7 @@ fun HealthConnectNavigation(
       )
       val permissionsGranted by viewModel.permissionsGranted
       val sessionsList by viewModel.sessionsList
+      val sessionsMetricList by viewModel.sessionMetricsList
       val permissions = viewModel.permissions
       val backgroundReadPermissions = viewModel.backgroundReadPermissions
       val backgroundReadAvailable by viewModel.backgroundReadAvailable
@@ -120,7 +121,8 @@ fun HealthConnectNavigation(
         },
         onPermissionsLaunch = { values ->
           permissionsLauncher.launch(values)
-        }
+        },
+        sessionsMetricList = sessionsMetricList
       )
     }
     composable(Screen.ExerciseSessionDetail.route + "/{$UID_NAV_ARGUMENT}") {

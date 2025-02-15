@@ -21,6 +21,7 @@ import androidx.health.connect.client.units.Energy
 import androidx.health.connect.client.units.Length
 import androidx.health.connect.client.units.Velocity
 import java.time.Duration
+import java.time.Instant
 
 /**
  * Represents data, both aggregated and raw, associated with a single exercise session. Used to
@@ -36,6 +37,8 @@ data class ExerciseSessionData(
     val maxHeartRate: Long? = null,
     val avgHeartRate: Long? = null,
     val heartRateSeries: List<HeartRateRecord> = listOf(),
+    val heartRate: HeartRateRecord? = null,
+    val heartRateMeasurementDate: Instant? = null,
     val minSpeed: Velocity? = null,
     val maxSpeed: Velocity? = null,
     val avgSpeed: Velocity? = null,
