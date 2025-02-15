@@ -46,6 +46,7 @@ import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.random.Random
 
+
 /**
  * Shows a details of a given [ExerciseSessionRecord], including aggregates and underlying raw data.
  */

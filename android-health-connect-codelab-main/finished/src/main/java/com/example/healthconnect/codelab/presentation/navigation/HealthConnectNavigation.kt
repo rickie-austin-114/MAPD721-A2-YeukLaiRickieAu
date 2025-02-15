@@ -26,19 +26,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.example.healthconnect.codelab.data.HealthConnectManager
-import com.example.healthconnect.codelab.presentation.screen.WelcomeScreen
-import com.example.healthconnect.codelab.presentation.screen.changes.DifferentialChangesScreen
-import com.example.healthconnect.codelab.presentation.screen.changes.DifferentialChangesViewModel
-import com.example.healthconnect.codelab.presentation.screen.changes.DifferentialChangesViewModelFactory
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionScreen
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModel
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModelFactory
 import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailScreen
 import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailViewModel
 import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailViewModelFactory
-import com.example.healthconnect.codelab.presentation.screen.inputreadings.InputReadingsScreen
-import com.example.healthconnect.codelab.presentation.screen.inputreadings.InputReadingsViewModel
-import com.example.healthconnect.codelab.presentation.screen.inputreadings.InputReadingsViewModelFactory
 import com.example.healthconnect.codelab.presentation.screen.privacypolicy.PrivacyPolicyScreen
 import com.example.healthconnect.codelab.showExceptionSnackbar
 
@@ -55,15 +48,6 @@ fun HealthConnectNavigation(
   NavHost(navController = navController, startDestination = Screen.ExerciseSessions.route) {
     val availability by healthConnectManager.availability
 
-    /*
-    composable(Screen.WelcomeScreen.route) {
-      WelcomeScreen(
-        healthConnectAvailability = availability,
-        onResumeAvailabilityCheck = {
-          healthConnectManager.checkAvailability()
-        }
-      )
-    }*/
     composable(
       route = Screen.PrivacyPolicy.route,
       deepLinks = listOf(
@@ -162,78 +146,6 @@ fun HealthConnectNavigation(
         }
       )
     }
-    /*
-    composable(Screen.InputReadings.route) {
-      val viewModel: InputReadingsViewModel = viewModel(
-        factory = InputReadingsViewModelFactory(
-          healthConnectManager = healthConnectManager
-        )
-      )
-      val permissionsGranted by viewModel.permissionsGranted
-      val readingsList by viewModel.readingsList
-      val permissions = viewModel.permissions
-      val weeklyAvg by viewModel.weeklyAvg
-      val onPermissionsResult = { viewModel.initialLoad() }
-      val permissionsLauncher =
-        rememberLauncherForActivityResult(viewModel.permissionsLauncher) {
-          onPermissionsResult()
-        }
-      InputReadingsScreen(
-        permissionsGranted = permissionsGranted,
-        permissions = permissions,
 
-        uiState = viewModel.uiState,
-        onInsertClick = { weightInput ->
-          viewModel.inputReadings(weightInput)
-        },
-        weeklyAvg = weeklyAvg,
-        readingsList = readingsList,
-        onError = { exception ->
-          showExceptionSnackbar(scaffoldState, scope, exception)
-        },
-        onPermissionsResult = {
-          viewModel.initialLoad()
-        },
-        onPermissionsLaunch = { values ->
-          permissionsLauncher.launch(values)
-        }
-      )
-    }
-    composable(Screen.DifferentialChanges.route) {
-      val viewModel: DifferentialChangesViewModel = viewModel(
-        factory = DifferentialChangesViewModelFactory(
-          healthConnectManager = healthConnectManager
-        )
-      )
-      val changesToken by viewModel.changesToken
-      val permissionsGranted by viewModel.permissionsGranted
-      val permissions = viewModel.permissions
-      val onPermissionsResult = {viewModel.initialLoad()}
-      val permissionsLauncher =
-        rememberLauncherForActivityResult(viewModel.permissionsLauncher) {
-          onPermissionsResult()}
-      DifferentialChangesScreen(
-        permissionsGranted = permissionsGranted,
-        permissions = permissions,
-        changesEnabled = changesToken != null,
-        onChangesEnable = { enabled ->
-          viewModel.enableOrDisableChanges(enabled)
-        },
-        changes = viewModel.changes,
-        changesToken = changesToken,
-        onGetChanges = {
-          viewModel.getChanges()
-        },
-        uiState = viewModel.uiState,
-        onError = { exception ->
-          showExceptionSnackbar(scaffoldState, scope, exception)
-        },
-        onPermissionsResult = {
-          viewModel.initialLoad()
-        },
-        onPermissionsLaunch = { values ->
-          permissionsLauncher.launch(values)}
-      )
-    }*/
   }
 }
