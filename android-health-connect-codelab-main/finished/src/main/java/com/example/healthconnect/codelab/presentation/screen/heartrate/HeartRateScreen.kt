@@ -224,46 +224,6 @@ fun HeartRateScreen(
           Text("Heartrate item")
         }
 
-
-
-/*
-                if (!historyReadGranted) {
-                  item {
-                    Button(
-                      modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                        .padding(4.dp),
-                      onClick = {
-                        onPermissionsLaunch(historyReadPermissions)
-                      },
-                      enabled = historyReadAvailable,
-                    ) {
-                      if (historyReadAvailable){
-                        Text(stringResource(R.string.request_history_read))
-                      } else {
-                        Text(stringResource(R.string.history_read_is_not_available))
-                      }
-                    }
-                  }
-                }
-
-
-                items(sessionsList) { session ->
-                  ExerciseSessionRow(
-                    ZonedDateTime.ofInstant(session.startTime, session.startZoneOffset),
-                    ZonedDateTime.ofInstant(session.endTime, session.endZoneOffset),
-                    session.metadata.id,
-                    session.metadata.dataOrigin.packageName,
-
-                    session.title ?: stringResource(R.string.no_title),
-                    onDetailsClick = { uid ->
-                      onDetailsClick(uid)
-                    }
-                  )
-                }*/
-
-
         item {
 
           Box(

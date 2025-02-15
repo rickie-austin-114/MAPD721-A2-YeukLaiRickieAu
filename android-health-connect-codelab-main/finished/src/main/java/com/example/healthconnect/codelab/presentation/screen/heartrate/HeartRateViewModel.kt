@@ -95,16 +95,6 @@ class HeartRateViewModel(private val healthConnectManager: HealthConnectManager)
     viewModelScope.launch {
       tryWithPermissionsCheck {
 
-        /*
-        val startOfDay = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS)
-        //val latestStartOfSession = ZonedDateTime.now().minusMinutes(30)
-        //val offset = Random.nextDouble()
-
-        // Generate random start time between the start of the day and (now - 30mins).
-        val startOfSession = startOfDay.plusSeconds(
-          (Duration.between(startOfDay, latestStartOfSession).seconds * offset).toLong()
-        )*/
-
         val dateString = "$date UTC"
 
         // Define the custom format
@@ -115,7 +105,6 @@ class HeartRateViewModel(private val healthConnectManager: HealthConnectManager)
         val endOfSession = startOfSession.plusMinutes(30)
 
         healthConnectManager.writeExerciseSession(startOfSession, endOfSession, heartBeatRate)
-        //readExerciseSessions()
       }
     }
   }
