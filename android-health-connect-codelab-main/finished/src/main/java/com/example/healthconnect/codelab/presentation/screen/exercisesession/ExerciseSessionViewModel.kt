@@ -91,7 +91,7 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
     }
   }
 
-  fun insertExerciseSession() {
+  fun insertExerciseSession(heartBeatRate: Double) {
     viewModelScope.launch {
       tryWithPermissionsCheck {
         val startOfDay = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS)
@@ -104,7 +104,7 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
         )
         val endOfSession = startOfSession.plusMinutes(30)
 
-        healthConnectManager.writeExerciseSession(startOfSession, endOfSession)
+        healthConnectManager.writeExerciseSession(startOfSession, endOfSession, heartBeatRate)
         //readExerciseSessions()
       }
     }

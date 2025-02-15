@@ -107,8 +107,8 @@ fun HealthConnectNavigation(
         },
         sessionsList = sessionsList,
         uiState = viewModel.uiState,
-        onInsertClick = {
-          viewModel.insertExerciseSession()
+        onInsertClick = { heartBeatRate ->
+          viewModel.insertExerciseSession(heartBeatRate)
         },
         onDetailsClick = { uid ->
           navController.navigate(Screen.ExerciseSessionDetail.route + "/" + uid)

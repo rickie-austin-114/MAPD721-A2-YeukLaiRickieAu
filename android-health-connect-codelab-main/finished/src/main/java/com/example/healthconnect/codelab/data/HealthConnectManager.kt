@@ -156,7 +156,7 @@ class HealthConnectManager(private val context: Context) {
   /**
    * TODO: Writes an [ExerciseSessionRecord] to Health Connect.
    */
-  suspend fun writeExerciseSession(start: ZonedDateTime, end: ZonedDateTime) {
+  suspend fun writeExerciseSession(start: ZonedDateTime, end: ZonedDateTime, heartBeatRate: Double) {
     healthConnectClient.insertRecords(
       listOf(
         ExerciseSessionRecord(
@@ -181,7 +181,7 @@ class HealthConnectManager(private val context: Context) {
           endZoneOffset = end.offset,
           energy = Energy.calories((140 + Random.nextInt(20)) * 0.01)
         )
-      ) + buildHeartRateSeries(start, end)
+      ) + buildHeartRateSeries(start, end, heartBeatRate)
     )
   }
 
@@ -191,18 +191,18 @@ class HealthConnectManager(private val context: Context) {
   private fun buildHeartRateSeries(
     sessionStartTime: ZonedDateTime,
     sessionEndTime: ZonedDateTime,
+    heartBeatRate: Double
   ): HeartRateRecord {
     val samples = mutableListOf<HeartRateRecord.Sample>()
     var time = sessionStartTime
-    while (time.isBefore(sessionEndTime)) {
-      samples.add(
-        HeartRateRecord.Sample(
-          time = time.toInstant(),
-          beatsPerMinute = (80 + Random.nextInt(80)).toLong()
-        )
+    samples.add(
+      HeartRateRecord.Sample(
+        time = time.toInstant(),
+        beatsPerMinute = heartBeatRate.toLong()
       )
-      time = time.plusSeconds(30)
-    }
+    )
+
+
     return HeartRateRecord(
       startTime = sessionStartTime.toInstant(),
       startZoneOffset = sessionStartTime.offset,
