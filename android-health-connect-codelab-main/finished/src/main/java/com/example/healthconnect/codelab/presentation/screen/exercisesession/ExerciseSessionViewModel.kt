@@ -43,6 +43,7 @@ import java.util.UUID
 import kotlin.random.Random
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectManager) :
   ViewModel() {
@@ -105,9 +106,14 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
         val startOfSession = startOfDay.plusSeconds(
           (Duration.between(startOfDay, latestStartOfSession).seconds * offset).toLong()
         )*/
-        val dateString = "2025-02-14T10:15:30+01:00[Europe/Paris]"
 
-        val startOfSession = ZonedDateTime.parse(date)
+        val dateString = "$date UTC"
+
+        // Define the custom format
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z", Locale.ENGLISH)
+
+
+        val startOfSession = ZonedDateTime.parse(dateString, formatter)
         val endOfSession = startOfSession.plusMinutes(30)
 
         healthConnectManager.writeExerciseSession(startOfSession, endOfSession, heartBeatRate)

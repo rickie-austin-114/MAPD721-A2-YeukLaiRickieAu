@@ -51,7 +51,7 @@ import java.time.ZonedDateTime
 import java.util.UUID
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-
+import java.util.Locale
 /**
  * Shows a list of [ExerciseSessionRecord]s from today.
  */
@@ -90,12 +90,19 @@ fun ExerciseSessionScreen(
 
 
 
-  fun canConvertToZonedDateTime(dateTimeString: String, formatter: DateTimeFormatter? = null): Boolean {
+  fun canConvertToZonedDateTime(dateTimeString: String, formatter: DateTimeFormatter? = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z", Locale.ENGLISH)): Boolean {
+
+      // Example string with custom format
+
+
+
     return try {
       if (formatter != null) {
-        ZonedDateTime.parse(dateTimeString, formatter)
+        val dateString = "$dateTimeString UTC"
+        ZonedDateTime.parse(dateString, formatter)
       } else {
-        ZonedDateTime.parse(dateTimeString)
+        val dateString = "$dateTimeString UTC"
+        ZonedDateTime.parse(dateString)
       }
       true // If parsing is successful
     } catch (e: DateTimeParseException) {
@@ -196,8 +203,7 @@ fun ExerciseSessionScreen(
                 .height(48.dp)
                 .padding(4.dp),
               enabled = (hasValidDoubleInRange(heartBeatInput) && canConvertToZonedDateTime(
-                dateInput,
-                null
+                dateInput
               )),
               onClick = {
                 onInsertClick(heartBeatInput.toDouble(), dateInput)
@@ -275,8 +281,9 @@ fun ExerciseSessionScreen(
             ) {
               items(sessionsMetricList) { session ->
                 Text(
-                  "Heart Beat: " + session.heartRateSeries[0].samples[0].beatsPerMinute.toString() + "     Date: "
-                          + session.heartRateSeries[0].samples[0].time.toString()
+                  session.heartRateSeries[0].samples[0].beatsPerMinute.toString() + " bpm          "
+                          + session.heartRateSeries[0].samples[0].time.toString().substring(0, 10)  + "        "
+                          + session.heartRateSeries[0].samples[0].time.toString().substring(11, 19)
                 )
               }
             }
