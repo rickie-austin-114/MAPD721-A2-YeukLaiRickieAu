@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail
-
+/*
 import android.os.RemoteException
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -119,3 +119,4 @@ class ExerciseSessionDetailViewModelFactory(
     throw IllegalArgumentException("Unknown ViewModel class")
   }
 }
+*/

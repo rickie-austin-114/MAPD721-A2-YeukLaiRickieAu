@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.example.healthconnect.codelab.presentation.screen.inputreadings
-
+/*
 import android.os.RemoteException
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -131,3 +131,4 @@ class InputReadingsViewModelFactory(
     throw IllegalArgumentException("Unknown ViewModel class")
   }
 }
+*/

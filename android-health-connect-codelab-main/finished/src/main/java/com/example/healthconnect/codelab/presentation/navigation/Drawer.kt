@@ -69,7 +69,8 @@ fun Drawer(
     ) {
       Image(
         modifier = Modifier
-            .width(96.dp)
+            .width(96.dp),
+            /*
             .clickable {
                 navController.navigate(Screen.WelcomeScreen.route) {
                     navController.graph.startDestinationRoute?.let { route ->
@@ -83,7 +84,7 @@ fun Drawer(
                 scope.launch {
                     scaffoldState.drawerState.close()
                 }
-            },
+            },*/
         painter = painterResource(id = R.drawable.ic_health_connect_logo),
         contentDescription = stringResource(id = R.string.health_connect_logo)
       )

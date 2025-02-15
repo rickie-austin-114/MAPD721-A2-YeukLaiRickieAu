@@ -29,9 +29,7 @@ import com.example.healthconnect.codelab.data.HealthConnectManager
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionScreen
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModel
 import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModelFactory
-import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailScreen
-import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailViewModel
-import com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail.ExerciseSessionDetailViewModelFactory
+
 import com.example.healthconnect.codelab.presentation.screen.privacypolicy.PrivacyPolicyScreen
 import com.example.healthconnect.codelab.showExceptionSnackbar
 
@@ -97,7 +95,7 @@ fun HealthConnectNavigation(
           viewModel.insertExerciseSession(heartBeatRate, date)
         },
         onDetailsClick = { uid ->
-          navController.navigate(Screen.ExerciseSessionDetail.route + "/" + uid)
+          //navController.navigate(Screen.ExerciseSessionDetail.route + "/" + uid)
         },
         onError = { exception ->
           showExceptionSnackbar(scaffoldState, scope, exception)
@@ -113,7 +111,7 @@ fun HealthConnectNavigation(
           viewModel.load()
         }
       )
-    }
+    } /*
     composable(Screen.ExerciseSessionDetail.route + "/{$UID_NAV_ARGUMENT}") {
       val uid = it.arguments?.getString(UID_NAV_ARGUMENT)!!
       val viewModel: ExerciseSessionDetailViewModel = viewModel(
@@ -146,6 +144,6 @@ fun HealthConnectNavigation(
         }
       )
     }
-
+*/
   }
 }

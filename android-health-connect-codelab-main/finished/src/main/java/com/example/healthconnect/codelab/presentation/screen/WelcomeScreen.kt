@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.example.healthconnect.codelab.presentation.screen
-
+/*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -135,4 +135,4 @@ fun NotSupportedMessagePreview() {
       onResumeAvailabilityCheck = {}
     )
   }
-}
+}*/

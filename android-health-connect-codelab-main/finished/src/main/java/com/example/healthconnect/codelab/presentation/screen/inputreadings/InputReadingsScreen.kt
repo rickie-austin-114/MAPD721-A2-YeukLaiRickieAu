@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.example.healthconnect.codelab.presentation.screen.inputreadings
-
+/*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -211,5 +211,5 @@ fun InputReadingsScreenPreview() {
 
   }
 }
-
+*/
 

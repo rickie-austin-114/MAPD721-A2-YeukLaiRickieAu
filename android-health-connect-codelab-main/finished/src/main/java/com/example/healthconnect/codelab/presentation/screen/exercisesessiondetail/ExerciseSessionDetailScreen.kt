@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.example.healthconnect.codelab.presentation.screen.exercisesessiondetail
-
+/*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -204,3 +204,4 @@ private fun generateHeartRateSeries(): List<HeartRateRecord> {
     )
   )
 }
+*/
