@@ -88,7 +88,7 @@ fun ExerciseSessionScreen(
 
 
 
-  fun canConvertToZonedDateTime(dateTimeString: String, formatter: DateTimeFormatter? = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss Z [VV]")): Boolean {
+  fun canConvertToZonedDateTime(dateTimeString: String, formatter: DateTimeFormatter? = null): Boolean {
     return try {
       if (formatter != null) {
         ZonedDateTime.parse(dateTimeString, formatter)
@@ -256,7 +256,7 @@ fun ExerciseSessionScreen(
               }
             }
           }
-        } */
+        }
 
 
         items(sessionsList) { session ->
@@ -271,11 +271,11 @@ fun ExerciseSessionScreen(
               onDetailsClick(uid)
             }
           )
-        }
+        }*/
 
         items(sessionsMetricList) { session ->
-          Text(session.heartRateSeries[0].samples[0].time.toString() + " "
-                  + session.heartRateSeries[0].samples[0].beatsPerMinute.toString())
+          Text("Heart Beat: "+ session.heartRateSeries[0].samples[0].beatsPerMinute.toString() + "     Date: "
+                  + session.heartRateSeries[0].samples[0].time.toString())
         }
 
         item {

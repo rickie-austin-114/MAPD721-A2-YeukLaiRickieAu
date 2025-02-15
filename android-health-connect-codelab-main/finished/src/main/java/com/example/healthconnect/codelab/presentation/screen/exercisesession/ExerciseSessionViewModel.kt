@@ -105,10 +105,9 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
         val startOfSession = startOfDay.plusSeconds(
           (Duration.between(startOfDay, latestStartOfSession).seconds * offset).toLong()
         )*/
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss Z [VV]")
+        val dateString = "2025-02-14T10:15:30+01:00[Europe/Paris]"
 
-
-        val startOfSession = ZonedDateTime.parse(date, formatter)
+        val startOfSession = ZonedDateTime.parse(date)
         val endOfSession = startOfSession.plusMinutes(30)
 
         healthConnectManager.writeExerciseSession(startOfSession, endOfSession, heartBeatRate)
