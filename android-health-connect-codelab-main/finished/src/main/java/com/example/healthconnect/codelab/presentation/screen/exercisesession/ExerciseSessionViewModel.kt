@@ -42,6 +42,7 @@ import java.time.temporal.ChronoUnit
 import java.util.UUID
 import kotlin.random.Random
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 
 class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectManager) :
   ViewModel() {
@@ -91,17 +92,23 @@ class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectMa
     }
   }
 
-  fun insertExerciseSession(heartBeatRate: Double) {
+  fun insertExerciseSession(heartBeatRate: Double, date: String) {
     viewModelScope.launch {
       tryWithPermissionsCheck {
+
+        /*
         val startOfDay = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS)
-        val latestStartOfSession = ZonedDateTime.now().minusMinutes(30)
-        val offset = Random.nextDouble()
+        //val latestStartOfSession = ZonedDateTime.now().minusMinutes(30)
+        //val offset = Random.nextDouble()
 
         // Generate random start time between the start of the day and (now - 30mins).
         val startOfSession = startOfDay.plusSeconds(
           (Duration.between(startOfDay, latestStartOfSession).seconds * offset).toLong()
-        )
+        )*/
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss Z [VV]")
+
+
+        val startOfSession = ZonedDateTime.parse(date, formatter)
         val endOfSession = startOfSession.plusMinutes(30)
 
         healthConnectManager.writeExerciseSession(startOfSession, endOfSession, heartBeatRate)

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
@@ -39,22 +40,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.records.ExerciseSessionRecord
-import androidx.health.connect.client.records.HeartRateRecord
-import androidx.health.connect.client.records.SpeedRecord
-import androidx.health.connect.client.records.metadata.Metadata
-import androidx.health.connect.client.units.Energy
-import androidx.health.connect.client.units.Length
-import androidx.health.connect.client.units.Velocity
 import com.example.healthconnect.codelab.R
 import com.example.healthconnect.codelab.data.ExerciseSessionData
 import com.example.healthconnect.codelab.presentation.component.ExerciseSessionRow
-import com.example.healthconnect.codelab.presentation.theme.HealthConnectTheme
-import java.time.Instant
 import java.time.ZonedDateTime
 import java.util.UUID
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 /**
  * Shows a list of [ExerciseSessionRecord]s from today.
@@ -72,7 +66,7 @@ fun ExerciseSessionScreen(
   onBackgroundReadClick: () -> Unit = {},
   sessionsList: List<ExerciseSessionRecord>,
   uiState: ExerciseSessionViewModel.UiState,
-  onInsertClick: (Double, String) -> Unit = {},
+  onInsertClick: (Double, String) -> Unit = { d: Double, s: String -> },
   onDetailsClick: (String) -> Unit = {},
   onError: (Throwable?) -> Unit = {},
   onPermissionsResult: () -> Unit = {},
@@ -92,6 +86,20 @@ fun ExerciseSessionScreen(
     } else (tempVal <= 300 && tempVal >= 0)
   }
 
+
+
+  fun canConvertToZonedDateTime(dateTimeString: String, formatter: DateTimeFormatter? = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss Z [VV]")): Boolean {
+    return try {
+      if (formatter != null) {
+        ZonedDateTime.parse(dateTimeString, formatter)
+      } else {
+        ZonedDateTime.parse(dateTimeString)
+      }
+      true // If parsing is successful
+    } catch (e: DateTimeParseException) {
+      false // Parsing failed
+    }
+  }
   // Remember the last error ID, such that it is possible to avoid re-launching the error
   // notification for the same error when the screen is recomposed, or configuration changes etc.
   val errorId = rememberSaveable { mutableStateOf(UUID.randomUUID()) }
@@ -168,19 +176,19 @@ fun ExerciseSessionScreen(
           ) {
             Button(
               modifier = Modifier
-                .fillMaxWidth()
+                .width(100.dp)
                 .height(48.dp)
                 .padding(4.dp),
-              enabled = hasValidDoubleInRange(heartBeatInput),
+              enabled = (hasValidDoubleInRange(heartBeatInput) && canConvertToZonedDateTime(dateInput, null)),
               onClick = {
-                onInsertClick(heartBeatInput.toDouble(), dateInput.toString())
+                onInsertClick(heartBeatInput.toDouble(), dateInput)
               }
             ) {
               Text(stringResource(id = R.string.save))
-            },
+            }
             Button(
               modifier = Modifier
-                .fillMaxWidth()
+                .width(100.dp)
                 .height(48.dp)
                 .padding(4.dp),
               onClick = {
@@ -190,6 +198,7 @@ fun ExerciseSessionScreen(
               Text(stringResource(id = R.string.load))
             }
           }
+          Text("Heartrate item")
         }
 
         /*
@@ -249,6 +258,7 @@ fun ExerciseSessionScreen(
           }
         } */
 
+
         items(sessionsList) { session ->
           ExerciseSessionRow(
             ZonedDateTime.ofInstant(session.startTime, session.startZoneOffset),
@@ -264,11 +274,13 @@ fun ExerciseSessionScreen(
         }
 
         items(sessionsMetricList) { session ->
+          Text(session.heartRateSeries[0].samples[0].time.toString() + " "
+                  + session.heartRateSeries[0].samples[0].beatsPerMinute.toString())
+        }
 
-
-          Text(session.heartRateSeries[0].samples[0].time.toString() + " " + session.heartRateSeries[0].samples[0].beatsPerMinute.toString())
-
-
+        item {
+          Text ("Sid: 301458593")
+          Text ("Name: Yeuk Lai Rickie Au")
         }
       }
     }
