@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.healthconnect.codelab.presentation.screen.exercisesession
+package com.example.healthconnect.codelab.presentation.screen.heartrate
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Box
@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -46,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.records.ExerciseSessionRecord
 import com.example.healthconnect.codelab.R
 import com.example.healthconnect.codelab.data.ExerciseSessionData
-import com.example.healthconnect.codelab.presentation.component.ExerciseSessionRow
 import java.time.ZonedDateTime
 import java.util.UUID
 import java.time.format.DateTimeFormatter
@@ -56,7 +54,7 @@ import java.util.Locale
  * Shows a list of [ExerciseSessionRecord]s from today.
  */
 @Composable
-fun ExerciseSessionScreen(
+fun HeartRateScreen(
   permissions: Set<String>,
   permissionsGranted: Boolean,
   backgroundReadPermissions: Set<String>,
@@ -67,7 +65,7 @@ fun ExerciseSessionScreen(
   historyReadGranted: Boolean,
   onBackgroundReadClick: () -> Unit = {},
   sessionsList: List<ExerciseSessionRecord>,
-  uiState: ExerciseSessionViewModel.UiState,
+  uiState: HeartRateViewModel.UiState,
   onInsertClick: (Double, String) -> Unit = { d: Double, s: String -> },
   onDetailsClick: (String) -> Unit = {},
   onError: (Throwable?) -> Unit = {},
@@ -115,7 +113,7 @@ fun ExerciseSessionScreen(
 
   LaunchedEffect(uiState) {
     // If the initial data load has not taken place, attempt to load the data.
-    if (uiState is ExerciseSessionViewModel.UiState.Uninitialized) {
+    if (uiState is HeartRateViewModel.UiState.Uninitialized) {
       onPermissionsResult()
     }
 
@@ -123,7 +121,7 @@ fun ExerciseSessionScreen(
     // success or resulted in an error. Where an error occurred, for example in reading and
     // writing to Health Connect, the user is notified, and where the error is one that can be
     // recovered from, an attempt to do so is made.
-    if (uiState is ExerciseSessionViewModel.UiState.Error && errorId.value != uiState.uuid) {
+    if (uiState is HeartRateViewModel.UiState.Error && errorId.value != uiState.uuid) {
       onError(uiState.exception)
       errorId.value = uiState.uuid
     }
@@ -131,7 +129,7 @@ fun ExerciseSessionScreen(
 
 
 
-  if (uiState != ExerciseSessionViewModel.UiState.Uninitialized) {
+  if (uiState != HeartRateViewModel.UiState.Uninitialized) {
     LazyColumn(
       modifier = Modifier.fillMaxSize(),
       verticalArrangement = Arrangement.Top,

@@ -26,9 +26,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.example.healthconnect.codelab.data.HealthConnectManager
-import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionScreen
-import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModel
-import com.example.healthconnect.codelab.presentation.screen.exercisesession.ExerciseSessionViewModelFactory
+import com.example.healthconnect.codelab.presentation.screen.heartrate.HeartRateScreen
+import com.example.healthconnect.codelab.presentation.screen.heartrate.HeartRateViewModel
+import com.example.healthconnect.codelab.presentation.screen.heartrate.ExerciseSessionViewModelFactory
 
 import com.example.healthconnect.codelab.presentation.screen.privacypolicy.PrivacyPolicyScreen
 import com.example.healthconnect.codelab.showExceptionSnackbar
@@ -57,7 +57,7 @@ fun HealthConnectNavigation(
       PrivacyPolicyScreen()
     }
     composable(Screen.ExerciseSessions.route) {
-      val viewModel: ExerciseSessionViewModel = viewModel(
+      val viewModel: HeartRateViewModel = viewModel(
         factory = ExerciseSessionViewModelFactory(
           healthConnectManager = healthConnectManager
         )
@@ -77,7 +77,7 @@ fun HealthConnectNavigation(
         rememberLauncherForActivityResult(viewModel.permissionsLauncher) {
           onPermissionsResult()
         }
-      ExerciseSessionScreen(
+      HeartRateScreen(
         permissionsGranted = permissionsGranted,
         permissions = permissions,
         backgroundReadAvailable = backgroundReadAvailable,

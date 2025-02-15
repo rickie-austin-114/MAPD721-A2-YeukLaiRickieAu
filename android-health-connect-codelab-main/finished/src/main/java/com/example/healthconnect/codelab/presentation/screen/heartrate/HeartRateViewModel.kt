@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.healthconnect.codelab.presentation.screen.exercisesession
+package com.example.healthconnect.codelab.presentation.screen.heartrate
 
 import android.os.RemoteException
 import androidx.compose.runtime.MutableState
@@ -35,17 +35,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.healthconnect.codelab.data.ExerciseSessionData
 import com.example.healthconnect.codelab.data.HealthConnectManager
 import java.io.IOException
-import java.time.Duration
 import java.time.Instant
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.UUID
-import kotlin.random.Random
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class ExerciseSessionViewModel(private val healthConnectManager: HealthConnectManager) :
+class HeartRateViewModel(private val healthConnectManager: HealthConnectManager) :
   ViewModel() {
   val permissions = setOf(
     HealthPermission.getWritePermission(ExerciseSessionRecord::class),
@@ -199,9 +197,9 @@ class ExerciseSessionViewModelFactory(
     private val healthConnectManager: HealthConnectManager,
 ) : ViewModelProvider.Factory {
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
-    if (modelClass.isAssignableFrom(ExerciseSessionViewModel::class.java)) {
+    if (modelClass.isAssignableFrom(HeartRateViewModel::class.java)) {
       @Suppress("UNCHECKED_CAST")
-      return ExerciseSessionViewModel(
+      return HeartRateViewModel(
         healthConnectManager = healthConnectManager
       ) as T
     }
