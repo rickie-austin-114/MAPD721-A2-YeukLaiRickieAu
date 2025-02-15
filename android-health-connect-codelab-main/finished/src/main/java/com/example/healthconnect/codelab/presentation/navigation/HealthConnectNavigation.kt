@@ -157,6 +157,7 @@ fun HealthConnectNavigation(
         }
       )
     }
+    /*
     composable(Screen.InputReadings.route) {
       val viewModel: InputReadingsViewModel = viewModel(
         factory = InputReadingsViewModelFactory(
@@ -228,6 +229,6 @@ fun HealthConnectNavigation(
         onPermissionsLaunch = { values ->
           permissionsLauncher.launch(values)}
       )
-    }
+    }*/
   }
 }

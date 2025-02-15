@@ -136,4 +136,7 @@
 
   <!-- Health Connect settings -->
   <string name="settings">Settings</string>
+  <string name="save">Save</string>
+  <string name="load">Load</string>
+
 </resources>

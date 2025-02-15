@@ -119,7 +119,19 @@ fun ExerciseSessionScreen(
               onInsertClick()
             }
           ) {
-            Text(stringResource(id = R.string.insert_exercise_session))
+            Text(stringResource(id = R.string.save))
+          }
+
+          Button(
+            modifier = Modifier
+              .fillMaxWidth()
+              .height(48.dp)
+              .padding(4.dp),
+            onClick = {
+              onInsertClick()
+            }
+          ) {
+            Text(stringResource(id = R.string.load))
           }
         }
 
