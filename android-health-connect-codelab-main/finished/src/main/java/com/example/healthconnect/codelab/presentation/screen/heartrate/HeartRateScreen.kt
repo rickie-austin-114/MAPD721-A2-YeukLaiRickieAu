@@ -41,10 +41,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.records.ExerciseSessionRecord
+import androidx.health.connect.client.records.HeartRateRecord
 import com.example.healthconnect.codelab.R
 import com.example.healthconnect.codelab.data.ExerciseSessionData
+import com.example.healthconnect.codelab.presentation.theme.HealthConnectTheme
 import java.time.ZonedDateTime
 import java.util.UUID
 import java.time.format.DateTimeFormatter
@@ -255,16 +258,16 @@ fun HeartRateScreen(
     }
   }
 }
-/*
+
 @Preview
 @Composable
-fun ExerciseSessionScreenPreview() {
+fun HeartRateScreenPreview() {
   HealthConnectTheme {
     val runningStartTime = ZonedDateTime.now()
     val runningEndTime = runningStartTime.plusMinutes(30)
     val walkingStartTime = ZonedDateTime.now().minusMinutes(120)
     val walkingEndTime = walkingStartTime.plusMinutes(30)
-    ExerciseSessionScreen(
+    HeartRateScreen(
       permissions = setOf(),
       permissionsGranted = true,
       backgroundReadPermissions = setOf(),
@@ -281,7 +284,6 @@ fun ExerciseSessionScreenPreview() {
           startZoneOffset = runningStartTime.offset,
           endTime = runningEndTime.toInstant(),
           endZoneOffset = runningEndTime.offset,
-          metadata = Metadata(UUID.randomUUID().toString())
         ),
         ExerciseSessionRecord(
           exerciseType = ExerciseSessionRecord.EXERCISE_TYPE_WALKING,
@@ -290,32 +292,28 @@ fun ExerciseSessionScreenPreview() {
           startZoneOffset = walkingStartTime.offset,
           endTime = walkingEndTime.toInstant(),
           endZoneOffset = walkingEndTime.offset,
-          metadata = Metadata(UUID.randomUUID().toString())
         )
       ),
-      uiState = ExerciseSessionViewModel.UiState.Done,
+      uiState = HeartRateViewModel.UiState.Done,
       sessionsMetricList = listOf(
         ExerciseSessionData(
           uid = "1",
-
           heartRateSeries = listOf(
             HeartRateRecord(
-              startTime: time.now(),
-              startZoneOffset: ZoneOffset?,
-            endTime: Instant,
-            endZoneOffset: ZoneOffset?,
-          samples: List<HeartRateRecord.Sample>,
-        metadata: Metadata
+              startTime =  runningStartTime.toInstant(),
+              startZoneOffset = runningStartTime.offset,
+              endTime =  runningStartTime.toInstant(),
+              endZoneOffset = runningStartTime.offset,
+              samples = listOf(
+                HeartRateRecord.Sample(
+                  time = runningStartTime.toInstant(),
+                  beatsPerMinute = 120
+                )
+              ),
             )
-          ),
-          speedRecord = listOf(
-            SpeedRecord(
-
-            )
-          ),
+          )
         )
-      )
+      ),
     )
   }
 }
-*/
