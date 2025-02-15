@@ -15,6 +15,8 @@
  */
 package com.example.healthconnect.codelab.presentation.screen.exercisesession
 
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -128,7 +130,7 @@ fun ExerciseSessionScreen(
       verticalArrangement = Arrangement.Top,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      if (!permissionsGranted) {
+      if (!permissionsGranted || !backgroundReadGranted) {
         item {
           Button(
             onClick = {
@@ -137,6 +139,19 @@ fun ExerciseSessionScreen(
           ) {
             Text(text = stringResource(R.string.permissions_button_label))
           }
+
+              Button(
+                onClick = {
+                  onPermissionsLaunch(backgroundReadPermissions)
+                },
+//                enabled = backgroundReadAvailable,
+              ) {
+                Text(stringResource(R.string.request_background_read))
+
+              }
+
+
+
         }
       } else {
         item {
@@ -168,9 +183,10 @@ fun ExerciseSessionScreen(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
           )
 
-          Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+          Row(
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly, // Space buttons evenly
             verticalAlignment = Alignment.CenterVertically
           ) {
@@ -179,7 +195,10 @@ fun ExerciseSessionScreen(
                 .width(100.dp)
                 .height(48.dp)
                 .padding(4.dp),
-              enabled = (hasValidDoubleInRange(heartBeatInput) && canConvertToZonedDateTime(dateInput, null)),
+              enabled = (hasValidDoubleInRange(heartBeatInput) && canConvertToZonedDateTime(
+                dateInput,
+                null
+              )),
               onClick = {
                 onInsertClick(heartBeatInput.toDouble(), dateInput)
               }
@@ -201,86 +220,71 @@ fun ExerciseSessionScreen(
           Text("Heartrate item")
         }
 
-        /*
-        if (!backgroundReadGranted) {
-          item {
-            Button(
-              modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .padding(4.dp),
-              onClick = {
-                onPermissionsLaunch(backgroundReadPermissions)
-              },
-              enabled = backgroundReadAvailable,
-            ) {
-              if (backgroundReadAvailable){
-                Text(stringResource(R.string.request_background_read))
-              } else {
-                Text(stringResource(R.string.background_read_is_not_available))
-              }
-            }
-          }
-        } else {
-          item {
-            Button(
-              modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .padding(4.dp),
-              onClick = {
-                onBackgroundReadClick()
-              },
-            ) {
-              Text(stringResource(R.string.read_steps_in_background))
-            }
-          }
-        }
-
-        if (!historyReadGranted) {
-          item {
-            Button(
-              modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .padding(4.dp),
-              onClick = {
-                onPermissionsLaunch(historyReadPermissions)
-              },
-              enabled = historyReadAvailable,
-            ) {
-              if (historyReadAvailable){
-                Text(stringResource(R.string.request_history_read))
-              } else {
-                Text(stringResource(R.string.history_read_is_not_available))
-              }
-            }
-          }
-        }
 
 
-        items(sessionsList) { session ->
-          ExerciseSessionRow(
-            ZonedDateTime.ofInstant(session.startTime, session.startZoneOffset),
-            ZonedDateTime.ofInstant(session.endTime, session.endZoneOffset),
-            session.metadata.id,
-            session.metadata.dataOrigin.packageName,
+/*
+                if (!historyReadGranted) {
+                  item {
+                    Button(
+                      modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .padding(4.dp),
+                      onClick = {
+                        onPermissionsLaunch(historyReadPermissions)
+                      },
+                      enabled = historyReadAvailable,
+                    ) {
+                      if (historyReadAvailable){
+                        Text(stringResource(R.string.request_history_read))
+                      } else {
+                        Text(stringResource(R.string.history_read_is_not_available))
+                      }
+                    }
+                  }
+                }
 
-            session.title ?: stringResource(R.string.no_title),
-            onDetailsClick = { uid ->
-              onDetailsClick(uid)
-            }
-          )
-        }*/
 
-        items(sessionsMetricList) { session ->
-          Text("Heart Beat: "+ session.heartRateSeries[0].samples[0].beatsPerMinute.toString() + "     Date: "
-                  + session.heartRateSeries[0].samples[0].time.toString())
-        }
+                items(sessionsList) { session ->
+                  ExerciseSessionRow(
+                    ZonedDateTime.ofInstant(session.startTime, session.startZoneOffset),
+                    ZonedDateTime.ofInstant(session.endTime, session.endZoneOffset),
+                    session.metadata.id,
+                    session.metadata.dataOrigin.packageName,
+
+                    session.title ?: stringResource(R.string.no_title),
+                    onDetailsClick = { uid ->
+                      onDetailsClick(uid)
+                    }
+                  )
+                }*/
+
 
         item {
-          Text ("Sid: 301458593")
-          Text ("Name: Yeuk Lai Rickie Au")
+
+          Box(
+            modifier = Modifier
+              .fillMaxSize()
+              .padding(16.dp)
+          ) {
+            LazyColumn(
+              modifier = Modifier
+                .height(400.dp) // Fixed height
+                .fillMaxWidth()
+                .padding(8.dp)
+            ) {
+              items(sessionsMetricList) { session ->
+                Text(
+                  "Heart Beat: " + session.heartRateSeries[0].samples[0].beatsPerMinute.toString() + "     Date: "
+                          + session.heartRateSeries[0].samples[0].time.toString()
+                )
+              }
+            }
+          }
+        }
+        item {
+          Text("Sid: 301458593")
+          Text("Name: Yeuk Lai Rickie Au")
         }
       }
     }
